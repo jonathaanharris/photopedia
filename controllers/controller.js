@@ -92,6 +92,13 @@ class Controller {
       .catch(err => res.send(err))
   }
 
+  static logout(req, res) {
+    req.session.destroy(err => {
+      if(err) res.send(err) 
+      else res.redirect('/login')
+    })
+  }
+
 }
 
 module.exports = Controller
