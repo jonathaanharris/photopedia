@@ -1,4 +1,4 @@
-const {User} = require('../models')
+const {User, Post, Comment} = require('../models')
 const bcrypt = require('bcryptjs');
 
 class Controller {
@@ -17,9 +17,9 @@ class Controller {
   }
 
   static registerAdd(req, res) {
-    let {username, password, role} = req.body
-    User.create({username, password, role})
-      .then((result) => {
+    let {username, password, email, role} = req.body
+    User.create({username, password, email, role})
+      .then(() => {
         res.redirect('/')
       }).catch((err) => {
         res.send(err)
@@ -38,7 +38,11 @@ class Controller {
       .then(data => {
         const validPw = bcrypt.compareSync(password, data.password)
         if(username) {
-          if(validPw) return res.redirect('/')
+          
+          if(validPw) {
+            req.session.userId = data.id
+            return res.redirect('/')
+          } 
           else return res.redirect(`/login?error=${error}`)
         } else {
           return res.redirect(`/login?error=${error}`)
@@ -47,6 +51,15 @@ class Controller {
       .catch(err => res.redirect(`/login?error=${error}`))
   }
   
+  static coba(req, res) {
+    User.findAll({
+      include: [
+        {model: Post, include: [Comment] }
+      ]
+    })
+    .then(data => res.send(data))
+    .catch(err => res.send(err))
+  }
 
 
 }
