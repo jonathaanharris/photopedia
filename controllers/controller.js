@@ -12,11 +12,12 @@ class Controller {
       }]
     })
       .then((data) => {
-        console.log(data);
+        console.log(req.session.userId)
         res.render('home', { data, timeSince })
       }).catch((err) => {
         res, send(err)
       });
+
   }
   static addPost(req, res) {
 
@@ -48,12 +49,12 @@ class Controller {
     User.findOne({ where: { username: username } })
       .then(data => {
         const validPw = bcrypt.compareSync(password, data.password)
-        if(username) {
-          
-          if(validPw) {
+        if (username) {
+
+          if (validPw) {
             req.session.userId = data.id
             return res.redirect('/')
-          } 
+          }
 
           else return res.redirect(`/login?error=${error}`)
         } else {
@@ -62,17 +63,16 @@ class Controller {
       })
       .catch(err => res.redirect(`/login?error=${error}`))
   }
- 
+
   static coba(req, res) {
     User.findAll({
       include: [
-        {model: Post, include: [Comment] }
+        { model: Post, include: [Comment] }
       ]
     })
-    .then(data => res.send(data))
-    .catch(err => res.send(err))
+      .then(data => res.send(data))
+      .catch(err => res.send(err))
   }
-
 
 }
 
