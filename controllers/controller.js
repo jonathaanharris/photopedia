@@ -1,15 +1,25 @@
-const {User, Post, Comment} = require('../models')
+
+const { User, Post, Comment } = require('../models')
 const bcrypt = require('bcryptjs');
+const timeSince = require('../helper/time')
 
 class Controller {
 
-  static user(req, res) {
-    User.findAll()
-    .then((result) => {
-      res.send(result)
-    }).catch((err) => {
-      res,send(err)
-    });
+  static home(req, res) {
+    Post.findAll({
+      include: [{
+        model: User
+      }]
+    })
+      .then((data) => {
+        console.log(data);
+        res.render('home', { data, timeSince })
+      }).catch((err) => {
+        res, send(err)
+      });
+  }
+  static addPost(req, res) {
+
   }
 
   static registerForm(req, res) {
@@ -17,9 +27,10 @@ class Controller {
   }
 
   static registerAdd(req, res) {
-    let {username, password, email, role} = req.body
-    User.create({username, password, email, role})
-      .then(() => {
+
+    let { username, password, role, email } = req.body
+    User.create({ username, password, role, email })
+      .then((result) => {
         res.redirect('/')
       }).catch((err) => {
         res.send(err)
@@ -28,13 +39,13 @@ class Controller {
 
   static loginForm(req, res) {
     let err = req.query.error
-    res.render('loginForm', {err})
+    res.render('loginForm', { err })
   }
-  
+
   static loginAdd(req, res) {
-    let {username, password} = req.body
+    let { username, password } = req.body
     const error = 'invalid username/password'
-    User.findOne({where : {username : username}})
+    User.findOne({ where: { username: username } })
       .then(data => {
         const validPw = bcrypt.compareSync(password, data.password)
         if(username) {
@@ -43,6 +54,7 @@ class Controller {
             req.session.userId = data.id
             return res.redirect('/')
           } 
+
           else return res.redirect(`/login?error=${error}`)
         } else {
           return res.redirect(`/login?error=${error}`)
@@ -50,7 +62,7 @@ class Controller {
       })
       .catch(err => res.redirect(`/login?error=${error}`))
   }
-  
+ 
   static coba(req, res) {
     User.findAll({
       include: [

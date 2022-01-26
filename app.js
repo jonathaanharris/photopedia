@@ -6,6 +6,7 @@ const port = 3000
 
 
 app.set('view engine', 'ejs')
+
 app.use(express.urlencoded({extended: false}))
 app.use(session({
   secret: 'photopedia',
@@ -19,6 +20,10 @@ app.use(session({
 
 
 app.get('/', Controller.user)
+
+app.get('/', Controller.home)
+app.get('/post/add', Controller.addPost)
+
 
 app.get('/register', Controller.registerForm)
 app.post('/register', Controller.registerAdd)
@@ -34,8 +39,10 @@ app.use(function(req, res, next) {
   } else {
     next()
   }
-})
+
 
 app.get('/coba', Controller.coba)
 
-app.listen(port)
+app.listen(port, () => {
+  console.log('listen');
+})
