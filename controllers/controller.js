@@ -15,12 +15,31 @@ class Controller {
         console.log(req.session.userId)
         res.render('home', { data, timeSince })
       }).catch((err) => {
-        res, send(err)
+        res.send(err)
       });
 
   }
   static addPost(req, res) {
+    res.render('addPost')
+  }
+  static postAddPost(req, res) {
+    let { title, description, image } = req.body
+    let UserId = req.session.userId
 
+    Post.create({ UserId, title, description, image })
+      .then(data => {
+        res.redirect('/')
+      })
+      .catch(err => {
+        if (err.name === 'SequelizeValidationError') {
+          let arr = []
+          err.errors.forEach(element => {
+            arr.push(element.message)
+          });
+          res.send(arr)
+        }
+        res.send(err)
+      })
   }
 
   static registerForm(req, res) {
@@ -28,7 +47,6 @@ class Controller {
   }
 
   static registerAdd(req, res) {
-
     let { username, password, role, email } = req.body
     User.create({ username, password, role, email })
       .then((result) => {
