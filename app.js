@@ -23,6 +23,7 @@ app.post('/register', Controller.registerAdd)
 
 app.get('/login', Controller.loginForm)
 app.post('/login', Controller.loginAdd)
+app.get('/', Controller.home)
 
 app.use((req, res, next) => {
   console.log(req.session);
@@ -34,9 +35,9 @@ app.use((req, res, next) => {
   }
 })
 
-app.get('/', Controller.home)
 
 app.get('/post/add', Controller.addPost)
+app.post('/post/add', Controller.postAddPost)
 app.get('/coba', Controller.coba)
 
 app.listen(port, () => {

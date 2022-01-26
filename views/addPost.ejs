@@ -31,21 +31,20 @@
     </div>
   </nav>
   <div class="container">
-    <%data.forEach(el=>{%> 
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="<%=el.image%> " alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title"><%=el.title%> </h5>
-          <p class="card-text"><%=el.description%> </p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">post by <%=el.User.username%> <%=timeSince(el.createdAt)%> </li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="card-link">see detail</a>
-          <a href="#" class="card-link">delete</a>
-        </div>
+    <form action="/post/add" method="POST">
+      <div class="form-group">
+        <label for="title">title</label>
+        <input type="text" class="form-control" id="title" name='title'>
       </div>
-    <%})%> 
+      <div class="form-group">
+        <label for="description">description</label>
+        <input type="text" class="form-control" id="description" name='description'>
+      </div>
+      <div class="form-group">
+        <label for="image">image</label>
+        <input type="text" class="form-control" id="image" name='image'>
+      </div>    
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
 </html> 

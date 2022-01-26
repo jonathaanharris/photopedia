@@ -20,9 +20,15 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
     title: DataTypes.STRING,
     description: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Post',
-  });
+  },
+    {
+      hooks: {
+        beforeCreate: (instance, options) => {
+        }
+
+      },
+      sequelize,
+      modelName: 'Post',
+    });
   return Post;
 };
