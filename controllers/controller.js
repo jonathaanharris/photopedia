@@ -1,3 +1,4 @@
+
 const { User, Post, Comment } = require('../models')
 const bcrypt = require('bcryptjs');
 const timeSince = require('../helper/time')
@@ -26,6 +27,7 @@ class Controller {
   }
 
   static registerAdd(req, res) {
+
     let { username, password, role, email } = req.body
     User.create({ username, password, role, email })
       .then((result) => {
@@ -46,8 +48,13 @@ class Controller {
     User.findOne({ where: { username: username } })
       .then(data => {
         const validPw = bcrypt.compareSync(password, data.password)
-        if (username) {
-          if (validPw) return res.redirect('/')
+        if(username) {
+          
+          if(validPw) {
+            req.session.userId = data.id
+            return res.redirect('/')
+          } 
+
           else return res.redirect(`/login?error=${error}`)
         } else {
           return res.redirect(`/login?error=${error}`)
@@ -55,7 +62,16 @@ class Controller {
       })
       .catch(err => res.redirect(`/login?error=${error}`))
   }
-
+ 
+  static coba(req, res) {
+    User.findAll({
+      include: [
+        {model: Post, include: [Comment] }
+      ]
+    })
+    .then(data => res.send(data))
+    .catch(err => res.send(err))
+  }
 
 
 }
