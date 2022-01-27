@@ -8,10 +8,10 @@
 </head>
 <body>
   <%- include('./partial/navbar') %>
-
+<div class="container">
   <% if (data.Profile) { %>
 
-  <div class="card" style="width: 18rem;">
+  <div class="card">
     <ul class="list-group list-group-flush">
       <li class="list-group-item"> Username: <%= data.username %></li>
       <li class="list-group-item"> Name: <%= data.Profile.firstName %> <%= data.Profile.lastName %></li>
@@ -19,21 +19,8 @@
     </ul>
     <a href="/profile/<%= data.id %>/form"><button>Edit Profile</button></a>
   </div>
-    <h2>Post</h2>
-
-  <% data.Posts.forEach(el => { %>
-    <div class="card" style="width: 18rem;">
-      <img src="<%= el.image %>" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p class="card-text"><%= el.title %></p>
-        <a href="/post/<%= el.id %>"><button>See Detail</button></a>
-      </div>
-    </div>
-  <% }) %>
-
-  <% } else { %>
-
-    <div class="card" style="width: 18rem;">
+   <% } else { %>
+    <div class="card">
       <ul class="list-group list-group-flush">
         <li class="list-group-item"> Username: <%= data.username %></li>
         <li class="list-group-item"> Name: --- </li>
@@ -41,8 +28,17 @@
       </ul>
       <a href="/profile/<%= data.id %>/form"><button>Edit Profile</button></a>
     </div>
-      <h2>Post</h2>
-      
   <% } %>
+  <h2>Post</h2>
+  <% data.Posts.forEach(el => { %>
+    <div class="card">
+      <img src="<%= el.image %>" class="rounded mx-auto d-block" alt="...">
+      <div class="card-body">
+        <p class="card-text"><%= el.title %></p>
+        <a href="/post/<%= el.id %>"><button>See Detail</button></a>
+      </div>
+    </div>
+  <% }) %>
+</div>
 </body>
 </html>

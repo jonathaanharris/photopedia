@@ -12,6 +12,7 @@
   <%- include('./partial/navbar') %>
 
   <div class="container">
+    
       <div class="card">
         <img class="rounded mx-auto d-block" src="<%=data.image%> " alt="Card image cap">
         <div class="card-body">
@@ -23,7 +24,7 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">post by <%=data.User.username%> <%=timeSince(data.createdAt)%> </li>
         </ul>
-        <% if (currentUser===data.User.dataValues.id) { %>
+        <% if (currentUser===data.User.dataValues.id||role==='admin') { %>
         <div class="card-body">
             <a href="/post/<%=data.id%>/delete" class="card-link">delete post</a>
         </div>
@@ -34,7 +35,7 @@
           <li class="list-group-item"><%=el.content%> <br>
             <% if(el.User){%> 
             comment by <%=el.User.dataValues.username%> <%=timeSince(el.createdAt)%>
-            <% if (currentUser===el.User.dataValues.id) { %>
+            <% if (currentUser===el.User.dataValues.id||role==='admin') { %>
               <div class="card-body">
                   <a href="/comment/<%=data.id%>/<%=el.id%>/delete" class="card-link">delete</a>
               </div>
@@ -51,6 +52,9 @@
             <label for="comment" class="form-label">add new comment</label>
             <input type="text" class="form-control" id="exampleInputEmail1" name="content">
           </div>
+          <% if (error) { %>
+            <p style="color: red;"><%= error %></p>
+          <% } %>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <% }%>

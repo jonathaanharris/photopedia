@@ -26,27 +26,32 @@ module.exports = (sequelize, DataTypes) => {
       return this.dateOfBirth.toISOString().split('T')[0]
     }
   }
+
   Profile.init({
     firstName: {
       type: DataTypes.STRING,
-      validate : {
-        notEmpty : {msg: 'first name cannot be empty'}
+      validate: {
+        notEmpty: { msg: 'first name cannot be empty' }
       }
     },
     lastName: {
       type: DataTypes.STRING,
-      validate : {
-        notEmpty : {msg: 'last name cannot be empty'}
+      validate: {
+        notEmpty: { msg: 'last name cannot be empty' }
       }
     },
     dateOfBirth: {
       type: DataTypes.DATE,
       validate: {
-        notEmpty: {msg: 'Date cannot be empty'},
-        validateAge(dateOfBirth){
-          if (new Date().getFullYear() - new Date(this.dateOfBirth).getFullYear() < 18) {
-            throw new Error('Age must be over 17 years old')
-          } 
+        notEmpty: { msg: 'Date cannot be empty' },
+        validateAge(dateOfBirth) {
+          let check = new Date()
+          let age = check - dateOfBirth
+          age = age / (1000 * 60 * 60 * 24 * 365.25)
+          age = Math.floor(age)
+          if (age < 17) {
+            throw new Error('umur harus 17 tahun ke atas')
+          }
         }
       }
     },
