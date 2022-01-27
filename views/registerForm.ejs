@@ -10,6 +10,30 @@
 </head>
 <body>
 
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Photopedia</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav">
+          <a class="nav-link active" href="/">Home</a>
+          <a class="nav-link" href="/post/add">Add Post</a>
+        </div>
+        <form class="d-flex" action="/">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link" href="/register">Register</a>
+        </div>
+      </div>
+    </div>
+    </nav>
+
   <div class="container">
   <form action="/register" method="post">
     <div class="form-group">
@@ -31,6 +55,9 @@
         <option value="admin">admin</option>
       </select>
     </div>
+    <% if (error) { %>
+      <p style="color: red;"><%= error %></p>
+    <% } %>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>

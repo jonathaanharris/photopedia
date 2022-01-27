@@ -27,9 +27,29 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Profile.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    dateOfBirth: DataTypes.DATE,
+    firstName: {
+      type: DataTypes.STRING,
+      validate : {
+        notEmpty : {msg: 'first name cannot be empty'}
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      validate : {
+        notEmpty : {msg: 'last name cannot be empty'}
+      }
+    },
+    dateOfBirth: {
+      type: DataTypes.DATE,
+      validate: {
+        notEmpty: {msg: 'Date cannot be empty'},
+        validateAge(dateOfBirth){
+          if (new Date().getFullYear() - new Date(this.dateOfBirth).getFullYear() < 18) {
+            throw new Error('Age must be over 17 years old')
+          } 
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

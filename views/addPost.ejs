@@ -23,7 +23,10 @@
       <div class="form-group">
         <label for="image">image</label>
         <input type="text" class="form-control" id="image" name='image'>
-      </div>    
+      </div> 
+      <% if(error) { %>
+        <p style="color: red"><%= error %></p>
+      <% } %>   
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
