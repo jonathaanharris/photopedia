@@ -261,7 +261,7 @@ class Controller {
 
   static validateLogin(req, res, next) {
     if (!req.session.userId) {
-      const error = 'please login dulu'
+      const error = 'Please Login!'
       res.redirect(`/login?error=${error}`)
     } else {
       next()
