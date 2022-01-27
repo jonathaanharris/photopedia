@@ -1,0 +1,22 @@
+body {
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 11%, rgba(244,253,255,1) 25%, rgba(219,255,232,1) 63%);
+  background-size: cover;
+  min-height: 100vh
+}
+
+
+.card{
+  background-color:rgb(25, 0, 255);
+  border-radius: 10px;
+}
+
+#tes{
+  background-color:rgb(25, 0, 255);
+  border-radius: 10px;  
+}
+
+.tes{
+  background-color:rgb(25, 0, 255);
+  border-radius: 10px;  
+}

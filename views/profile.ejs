@@ -5,10 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="/other.css"></link>
 </head>
 <body>
   <%- include('./partial/navbar') %>
-<div class="container">
+<div class="container text-center my-5" style="width: 50vh">
   <% if (data.Profile) { %>
   <div class="card">
     <ul class="list-group list-group-flush">
@@ -16,7 +17,7 @@
       <li class="list-group-item"> Name: <%= data.Profile.firstName %> <%= data.Profile.lastName %></li>
       <li class="list-group-item">Age : <%= data.Profile.age() %></li>
     </ul>
-    <a href="/profile/<%= data.id %>/form"><button>Edit Profile</button></a>
+    <a class="btn" href="/profile/<%= data.id %>/form">Edit Profile</a>
   </div>
     <% } else { %>
     <div class="card">
@@ -28,16 +29,16 @@
       <a href="/profile/<%= data.id %>/form"><button>Edit Profile</button></a>
     </div>
   <% } %>
-  <h2>Post</h2>
+  <br>
+  <h5><%=data.username%>'s post</h5>
+  <ul class="list-group"></ul>
   <% data.Posts.forEach(el => { %>
-    <div class="card">
-      <img src="<%= el.image %>" class="rounded mx-auto d-block" alt="...">
-      <div class="card-body">
-        <p class="card-text"><%= el.title %></p>
-        <a href="/post/<%= el.id %>"><button>See Detail</button></a>
-      </div>
-    </div>
+    
+      <li class="list-group-item"><a href="/post/<%= el.id %>"><%= el.title %></a></li>
+
+        
   <% }) %>
+</ul>
 </div>
 </body>
 </html>

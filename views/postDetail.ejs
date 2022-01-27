@@ -6,59 +6,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
   integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <link rel="stylesheet" href="/other.css"></link>
   <title>Document</title>
 </head>
 <body>
   <%- include('./partial/navbar') %>
-
   <div class="container">
-    
-      <div class="card">
-        <img class="rounded mx-auto d-block" src="<%=data.image%> " alt="Card image cap">
-        <div class="card-body">
-          <p class="card-title"> Like : <%=data.like%> </p>
-          <a href="/post/<%= data.id %>/like"> <button>like</button></a>
-          <h5 class="card-title"><%=data.title%> </h5>
-          <p class="card-text"><%=data.description%> </p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">post by <%=data.User.username%> <%=timeSince(data.createdAt)%> </li>
-        </ul>
-        <% if (currentUser===data.User.dataValues.id||role==='admin') { %>
-        <div class="card-body">
-            <a href="/post/<%=data.id%>/delete" class="card-link">delete post</a>
-        </div>
-        <% }%>
-        <ul class="list-group list-group-flush">
-        <%comment.forEach(el=>{%> 
-        <div class="card-body">
-          <li class="list-group-item"><%=el.content%> <br>
-            <% if(el.User){%> 
-            comment by <%=el.User.dataValues.username%> <%=timeSince(el.createdAt)%>
-            <% if (currentUser===el.User.dataValues.id||role==='admin') { %>
-              <div class="card-body">
-                  <a href="/comment/<%=data.id%>/<%=el.id%>/delete" class="card-link">delete</a>
-              </div>
-            <% }%>
-            <% }%> 
-          </li>
-        </div>
-        <% }) %> 
-      </ul>
-      </div>
-      <% if (currentUser) { %>
-        <form action="/post/<%=data.id%>/addComment" method="POST">
-          <div class="mb-3">
-            <label for="comment" class="form-label">add new comment</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="content">
+    <div class="card m-5 ">
+      <div class="row">
+          <div class="col-md-4 text-center">
+            <a href="/post/<%= data.id %>/like"><img class="rounded mx-auto d-block" src="<%=data.image%> " alt="Card image cap"></a>
+            <div class="card-body">
+              <h5 class="card-title"><%=data.title%> </h5>
+              <small class="font-weight-light">Tap image for like!</small>
+              <p class="card-title font-weight-light"> like : <%=data.like%> </p>
+              
+              
+              <p class="card-text"><%=data.description%> </p>
+               <ul class="list-group list-group-flush">
+                <li class="list-group-item">Post by <%=data.User.username%> <%=timeSince(data.createdAt)%> </li>
+               </ul>
+               <% if (currentUser===data.User.dataValues.id||role==='admin') { %>
+                <div class="card-body">
+                    <a href="/post/<%=data.id%>/delete" class="card-link">delete post</a>
+                </div>
+                <% }%>
+            </div>
           </div>
-          <% if (error) { %>
-            <p style="color: red;"><%= error %></p>
-          <% } %>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-        <% }%>
+          <div class="col-md-8">
+            <% if (currentUser) { %>
+              <form action="/post/<%=data.id%>/addComment" method="POST">
+                <div class="mb-3">
+                  <label for="comment" class="form-label">Add Comment</label>
+                  <input type="text" class="form-control" name="content">
+                  <div class="d-grid gap-2 col-6 mx-auto my-2">
+                    <button type="submit" class="mx-auto btn btn-outline-success">Submit</button>
+                  </div>
+                 
+                </div>
+                <% if (error) { %>
+                  <p style="color: red;"><%= error %></p>
+                <% } %>
+              
+              </form>
+              <% }%>
+            <ul class="list-group list-group-flush">
+              <%comment.forEach(el=>{%> 
+              <div class="card-body">
+                <li class="list-group-item"><%=el.content%> <br>
+                  <% if(el.User){%> 
+                  comment by <%=el.User.dataValues.username%> <%=timeSince(el.createdAt)%>
+                  <% if (currentUser===el.User.dataValues.id||role==='admin') { %>
+                    <div class="card-body">
+                        <a href="/comment/<%=data.id%>/<%=el.id%>/delete" class="card-link">delete</a>
+                    </div>
+                  <% }%>
+                  <% }%> 
+                </li>
+              </div>
+              <% }) %> 
+            </ul>               
+          </div>
+      </div>
+  </div>
 </div>
+<footer class="mt-auto text-white-50">
+  small&copy; 2022 </p>
+</footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
 integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"

@@ -5,8 +5,12 @@ const timeSince = require('../helper/time')
 const { Op } = require('sequelize')
 
 class Controller {
-
   static home(req, res) {
+    let currentUser = req.session.userId
+    res.render('home', { currentUser })
+  }
+
+  static showPost(req, res) {
     let { search } = req.query
     let obj = {
       include: [{
@@ -22,7 +26,7 @@ class Controller {
       .then((data) => {
         let currentUser = req.session.userId
         let role = req.session.role
-        res.render('home', { data, timeSince, currentUser, role })
+        res.render('showPost', { data, timeSince, currentUser, role })
       }).catch((err) => {
         res.send(err)
       });
