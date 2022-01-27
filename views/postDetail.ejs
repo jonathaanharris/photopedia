@@ -4,12 +4,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-  <title>Document</title>
-</head>
-<body>
-  <%- include('./partial/navbar') %>
-=======
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
   integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
   <title>Document</title>
@@ -39,26 +33,23 @@
     </div>
   </nav>
 
->>>>>>> 4af7714652b45b46f3daa1a8f46b9f9535122398
   <div class="container">
-    <%data.forEach(el=>{%> 
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="<%=el.image%> " alt="Card image cap">
+        <img class="card-img-top" src="<%=data.image%> " alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title"><%=el.title%> </h5>
-          <p class="card-text"><%=el.description%> </p>
+          <h5 class="card-title"><%=data.title%> </h5>
+          <p class="card-text"><%=data.description%> </p>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">post by <%=el.User.username%> <%=timeSince(el.createdAt)%> </li>
+          <li class="list-group-item">post by <%=data.User.username%> <%=timeSince(data.createdAt)%> </li>
         </ul>
         <div class="card-body">
-          <a href="/post/<%=el.id%>" class="card-link">see detail</a>
-          <% if (currentUser===el.User.dataValues.id) { %>
-            <a href="#" class="card-link">delete</a>
+          <% if (currentUser===data.User.dataValues.id) { %>
+            <a href="#" class="card-link">ddataete</a>
             <% }%>
+          
         </div>
       </div>
-    <%})%> 
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"

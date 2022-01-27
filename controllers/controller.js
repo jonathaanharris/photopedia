@@ -12,15 +12,17 @@ class Controller {
       }]
     })
       .then((data) => {
-        console.log(req.session.userId)
-        res.render('home', { data, timeSince })
+        let currentUser = req.session.userId
+
+        res.render('home', { data, timeSince, currentUser })
       }).catch((err) => {
         res.send(err)
       });
-
   }
+
   static addPost(req, res) {
-    res.render('addPost')
+    let currentUser = req.session.userId
+    res.render('addPost', { currentUser })
   }
   static postAddPost(req, res) {
     let { title, description, image } = req.body
@@ -39,6 +41,26 @@ class Controller {
           res.send(arr)
         }
         res.send(err)
+      })
+  }
+
+  static postDetail(req, res) {
+    let { postId } = req.params
+    let currentUser = req.session.userId
+    Post.findAll({
+      where: { id: postId },
+      include: [{
+        model: User,
+        attributes: ["username", "id"],
+        required: false,
+      }, {
+        model: Comment,
+        required: false,
+      }]
+    })
+      .then(data => {
+        data = data[0]
+        res.render('postDetail', { currentUser, data, timeSince })
       })
   }
 
