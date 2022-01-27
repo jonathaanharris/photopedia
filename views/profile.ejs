@@ -10,7 +10,6 @@
   <%- include('./partial/navbar') %>
 <div class="container">
   <% if (data.Profile) { %>
-
   <div class="card">
     <ul class="list-group list-group-flush">
       <li class="list-group-item"> Username: <%= data.username %></li>
@@ -19,7 +18,7 @@
     </ul>
     <a href="/profile/<%= data.id %>/form"><button>Edit Profile</button></a>
   </div>
-   <% } else { %>
+    <% } else { %>
     <div class="card">
       <ul class="list-group list-group-flush">
         <li class="list-group-item"> Username: <%= data.username %></li>
