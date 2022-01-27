@@ -12,8 +12,8 @@
   <%- include('./partial/navbar') %>
 
   <div class="container">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="<%=data.image%> " alt="Card image cap">
+      <div class="card">
+        <img class="rounded mx-auto d-block" src="<%=data.image%> " alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title"><%=data.title%> </h5>
           <p class="card-text"><%=data.description%> </p>
@@ -23,7 +23,7 @@
         </ul>
         <% if (currentUser===data.User.dataValues.id) { %>
         <div class="card-body">
-            <a href="#" class="card-link">delete</a>
+            <a href="/post/<%=data.id%>/delete" class="card-link">delete post</a>
         </div>
         <% }%>
         <ul class="list-group list-group-flush">

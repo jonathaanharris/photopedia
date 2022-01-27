@@ -1,4 +1,4 @@
-const { User, Post, Comment, Profile} = require('../models')
+const { User, Post, Comment, Profile } = require('../models')
 
 const bcrypt = require('bcryptjs');
 const timeSince = require('../helper/time')
@@ -17,8 +17,6 @@ class Controller {
       obj.where = {}
       obj.where.title = { [Op.iLike]: `%${search}%` }
     }
-    console.log(obj);
-
     Post.findAll(obj)
       .then((data) => {
         let currentUser = req.session.userId
@@ -33,10 +31,24 @@ class Controller {
     // res.send('test')
     res.render('addPost', { currentUser })
   }
+  static deletePost(req, res) {
+    let { postId } = req.params
+    Post.destroy({
+      where: {
+        id: postId
+      }
+    }).then(data => {
+      res.redirect('/')
+    }).catch(err => {
+      res.send(err)
+    })
+  }
 
   static postAddPost(req, res) {
-    let { title, description, image } = req.body
+    let { title, description } = req.body
     let UserId = req.session.userId
+    let image = req.file.path
+    image = image.replace('/upload', '/upload/w_300')
 
     Post.create({ UserId, title, description, image })
       .then(data => {
@@ -151,7 +163,7 @@ class Controller {
       .catch(err => res.redirect(`/login?error=${error}`))
   }
 
-  static profile(req, res) {
+  static showProfile(req, res) {
     let currentUser = req.session.userId
     User.findAll({
       where: { id: currentUser },
@@ -165,7 +177,6 @@ class Controller {
     })
       .then(data => {
         data = data[0]
-        // res.send(data)
         res.render('profile', { currentUser, data, timeSince })
       })
   }

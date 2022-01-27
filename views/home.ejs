@@ -10,10 +10,10 @@
   <%- include('./partial/navbar') %>
   <div class="container">
     <%data.forEach(el=>{%> 
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="<%=el.image%> " alt="Card image cap">
+      <div class="card">
+        <img class="rounded mx-auto d-block" src="<%=el.image%> " alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title"><%=el.title%> </h5>
+          <h5 class="card-title"><%=el.title%></h5>
           <p class="card-text"><%=el.description%> </p>
         </div>
         <ul class="list-group list-group-flush">
@@ -22,7 +22,7 @@
         <div class="card-body">
           <a href="/post/<%=el.id%>" class="card-link">see detail</a>
           <% if (currentUser===el.User.dataValues.id) { %>
-            <a href="#" class="card-link">delete</a>
+            <a href="/post/<%=el.id%>/delete" class="card-link">delete</a>
             <% }%>
         </div>
       </div>
