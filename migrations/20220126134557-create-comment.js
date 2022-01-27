@@ -18,7 +18,9 @@ module.exports = {
             tableName: 'Users'
           },
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       PostId: {
         type: Sequelize.INTEGER,
@@ -27,7 +29,9 @@ module.exports = {
             tableName: 'Posts'
           },
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

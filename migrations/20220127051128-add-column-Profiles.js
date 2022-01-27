@@ -15,7 +15,9 @@ module.exports = {
           tableName: 'Users'
         },
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   },
 
