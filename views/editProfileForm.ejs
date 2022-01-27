@@ -26,7 +26,7 @@
       </div>
       <% if(error) { %>
         <p style="color: red"><%= error %></p>
-        <% } %>
+      <% } %>
       <button type="submit" class="btn btn-primary">Submit</button>
       </form>
 
@@ -45,6 +45,9 @@
         <label for="dateOfBirth">Date of Birth</label>
         <input id="dateOfBirth" type="date" name="dateOfBirth" value="<%= data.convertDate %>" class="form-control">
       </div>
+      <% if(error) { %>
+        <p style="color: red"><%= error %></p>
+      <% } %>
       <button type="submit" class="btn btn-primary">Submit</button>
       </form>
       

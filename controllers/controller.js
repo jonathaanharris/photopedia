@@ -95,14 +95,15 @@ class Controller {
             required: false,
           }]
         })
-      }).then(comment => {
+      })
+      .then(comment => {
         res.render('postDetail', { currentUser, data, comment, timeSince, error, role })
       })
+      .catch(err => res.send(err))
   }
 
   static likePost(req, res) {
     let { postId } = req.params
-    console.log(postId, '===========================');
     Post.increment('like', { where: { id: postId }, by: 1 })
       .then(() => res.redirect(`/post/${postId}`))
       .catch(err => res.send(err))
@@ -118,7 +119,8 @@ class Controller {
     User.create({ username, password, role, email })
       .then((result) => {
         res.redirect('/')
-      }).catch((err) => {
+      })
+      .catch((err) => {
         if (err.name === 'SequelizeValidationError') {
           err = err.errors.map(el => el.message)
           res.redirect(`/register/?error=${err}`)
@@ -203,6 +205,7 @@ class Controller {
         data = data[0]
         res.render('profile', { currentUser, data, timeSince })
       })
+      .catch(err => res.send(err))
   }
 
   static profileForm(req, res) {
@@ -213,7 +216,6 @@ class Controller {
     })
       .then(data => {
         data = data[0]
-        console.log(data);
         res.render('editProfileForm', { data, currentUser, error })
       })
       .catch(err => res.send(err))
@@ -245,7 +247,12 @@ class Controller {
       .then(data => {
         res.redirect(`/profile/${currentUser}`)
       })
-      .catch(err => res.send(err))
+      .catch(err => {
+        if (err.name === 'SequelizeValidationError') {
+          err = err.errors.map(el => el.message)
+          res.redirect(`/profile/${currentUser}/form?error=${err}`)
+        }
+      })
   }
 
   static logout(req, res) {
