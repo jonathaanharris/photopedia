@@ -1,4 +1,5 @@
-const { User, Post, Comment } = require('../models')
+const { User, Post, Comment, Profile} = require('../models')
+
 const bcrypt = require('bcryptjs');
 const timeSince = require('../helper/time')
 const { Op } = require('sequelize')
@@ -148,6 +149,25 @@ class Controller {
         }
       })
       .catch(err => res.redirect(`/login?error=${error}`))
+  }
+
+  static profile(req, res) {
+    let currentUser = req.session.userId
+    User.findAll({
+      where: { id: currentUser },
+      include: [{
+        model: Profile,
+        required: false
+      }, {
+        model: Post,
+        required: false,
+      }]
+    })
+      .then(data => {
+        data = data[0]
+        // res.send(data)
+        res.render('profile', { currentUser, data, timeSince })
+      })
   }
 
   static coba(req, res) {
