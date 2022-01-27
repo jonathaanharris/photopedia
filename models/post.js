@@ -17,11 +17,32 @@ module.exports = (sequelize, DataTypes) => {
   }
   Post.init({
     UserId: DataTypes.INTEGER,
-    image: DataTypes.STRING,
-    title: DataTypes.STRING,
-    description: DataTypes.STRING
+    image: {
+      type: DataTypes.STRING,
+      validate : {
+        notEmpty : {msg: 'image cannot be empty'}
+      }
+    },
+    title: {
+      type: DataTypes.STRING,
+      validate : {
+        notEmpty : {msg: 'title cannot be empty'}
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      validate : {
+        notEmpty : {msg: 'description cannot be empty'}
+      }
+    },
+    like: DataTypes.INTEGER
   },
     {
+      hooks: {
+        beforeCreate: (Post) => {
+          Post.like = 0
+        }
+      },
       sequelize,
       modelName: 'Post',
     });

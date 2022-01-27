@@ -10,9 +10,29 @@
 </head>
 <body>
 
-  <div class="container">
-
-
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Photopedia</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav">
+          <a class="nav-link active" href="/">Home</a>
+          <a class="nav-link" href="/post/add">Add Post</a>
+        </div>
+        <form class="d-flex" action="/">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link" href="/register">Register</a>
+        </div>
+      </div>
+    </div>
+    </nav>
     <div class="container d-flex justify-content-center align-items-center mt-5">
       <div class="row">
         <div class="col-md-6 offset-md-3"></div>
@@ -41,6 +61,9 @@
                   </select>
                 </div>
                 <div class="d-grid gap-2 mt-2">
+                    <% if (error) { %>
+      <p style="color: red;"><%= error %></p>
+    <% } %>
                   <button class="btn btn-primary" type="submit">Register</button>
                 </div>
               </form>
@@ -48,7 +71,6 @@
           </div>
         </div>
       </div>
-
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"

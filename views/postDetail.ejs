@@ -15,6 +15,8 @@
       <div class="card">
         <img class="rounded mx-auto d-block" src="<%=data.image%> " alt="Card image cap">
         <div class="card-body">
+          <p class="card-title"> Like : <%=data.like%> </p>
+          <a href="/post/<%= data.id %>/like"> <button>like</button></a>
           <h5 class="card-title"><%=data.title%> </h5>
           <p class="card-text"><%=data.description%> </p>
         </div>

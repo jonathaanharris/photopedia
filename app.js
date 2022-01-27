@@ -23,19 +23,30 @@ app.use(session({
     sameSite: true
   }
 }))
+
 app.get('/', Controller.home)
 app.get('/logout', Controller.logout)
+
 app.get('/register', Controller.registerForm)
 app.post('/register', Controller.registerAdd)
 app.get('/login', Controller.loginForm)
 app.post('/login', Controller.loginAdd)
 
 
-app.get('/profile/:profileId', Controller.validateLogin, Controller.showProfile)
 
+app.get('/profile/:profileId', Controller.validateLogin, Controller.showProfile)
+//Menambah post
 app.get('/post/add', Controller.validateLogin, Controller.addPost)
+
+app.get('/profile/:profileId', Controller.validateLogin, Controller.profile)
+app.get('/profile/:profileId/form', Controller.validateLogin, Controller.profileForm)
+app.post('/profile/:profileId/add', Controller.validateLogin, Controller.addProfile)
+app.post('/profile/:profileId/edit', Controller.validateLogin, Controller.editProfile)
+
 app.post('/post/add', upload.single('image'), Controller.postAddPost)
+
 app.get('/post/:postId', Controller.validateLogin, Controller.postDetail)
+app.get('/post/:postId/like', Controller.validateLogin, Controller.likePost)
 app.post('/post/:postId/addComment', Controller.validateLogin, Controller.addComment)
 app.get('/comment/:PostId/:id/delete', Controller.deleteComment)
 

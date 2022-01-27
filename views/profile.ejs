@@ -8,22 +8,41 @@
 </head>
 <body>
   <%- include('./partial/navbar') %>
+
+  <% if (data.Profile) { %>
+
   <div class="card" style="width: 18rem;">
     <ul class="list-group list-group-flush">
       <li class="list-group-item"> Username: <%= data.username %></li>
       <li class="list-group-item"> Name: <%= data.Profile.firstName %> <%= data.Profile.lastName %></li>
-      <li class="list-group-item">Age : <%= data.Profile.dateOfBirth %></li>
+      <li class="list-group-item">Age : <%= data.Profile.age() %></li>
     </ul>
+    <a href="/profile/<%= data.id %>/form"><button>Edit Profile</button></a>
   </div>
-  <h2>Post</h2>2 a
+    <h2>Post</h2>
+
   <% data.Posts.forEach(el => { %>
     <div class="card" style="width: 18rem;">
       <img src="<%= el.image %>" class="card-img-top" alt="...">
       <div class="card-body">
         <p class="card-text"><%= el.title %></p>
-        <a href="/post/<%= el.id %>"><button>fdff</button></a>
+        <a href="/post/<%= el.id %>"><button>See Detail</button></a>
       </div>
     </div>
   <% }) %>
+
+  <% } else { %>
+
+    <div class="card" style="width: 18rem;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"> Username: <%= data.username %></li>
+        <li class="list-group-item"> Name: --- </li>
+        <li class="list-group-item">Age : --- </li>
+      </ul>
+      <a href="/profile/<%= data.id %>/form"><button>Edit Profile</button></a>
+    </div>
+      <h2>Post</h2>
+      
+  <% } %>
 </body>
 </html>

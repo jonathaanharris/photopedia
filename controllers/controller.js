@@ -28,8 +28,8 @@ class Controller {
 
   static addPost(req, res) {
     let currentUser = req.session.userId
-    // res.send('test')
-    res.render('addPost', { currentUser })
+    let error = req.query.error
+    res.render('addPost', { currentUser, error})
   }
   static deletePost(req, res) {
     let { postId } = req.params
@@ -47,6 +47,7 @@ class Controller {
   static postAddPost(req, res) {
     let { title, description } = req.body
     let UserId = req.session.userId
+
     let image = req.file.path
     image = image.replace('/upload', '/upload/w_300')
 
@@ -55,14 +56,10 @@ class Controller {
         res.redirect('/')
       })
       .catch(err => {
-        if (err.name === 'SequelizeValidationError') {
-          let arr = []
-          err.errors.forEach(element => {
-            arr.push(element.message)
-          });
-          res.send(arr)
+        if(err.name === 'SequelizeValidationError') {
+          err = err.errors.map(el => el.message)
+          res.redirect(`/post/add?error=${err}`)
         }
-        res.send(err)
       })
   }
 
@@ -76,12 +73,7 @@ class Controller {
         model: User,
         attributes: ["username", "id"],
         required: false,
-      }
-        // , {
-        //   model: Comment,
-        //   required: false,
-        // }
-      ]
+      }]
     })
       .then(temp => {
         data = temp[0]
@@ -98,9 +90,32 @@ class Controller {
       })
   }
 
-  static registerForm(req, res) {
-    res.render('registerForm')
+  static likePost(req, res) {
+    let { postId } = req.params
+    console.log(postId, '===========================');
+    Post.increment('like', { where : { id: postId }, by:1 })
+      .then(() => res.redirect(`/post/${postId}`))
+      .catch(err => res.send(err))
   }
+
+  static registerForm(req, res) {
+    let error = req.query.error
+    res.render('registerForm', {error})
+  }
+
+  static registerAdd(req, res) {
+    let { username, password, role, email } = req.body
+    User.create({ username, password, role, email })
+      .then((result) => {
+        res.redirect('/')
+      }).catch((err) => {
+        if(err.name === 'SequelizeValidationError') {
+          err = err.errors.map(el => el.message)
+          res.redirect(`/register/?error=${err}`)
+        }
+      })
+  }
+
   static addComment(req, res) {
     let { postId } = req.params
     let { content } = req.body
@@ -127,15 +142,6 @@ class Controller {
     })
   }
 
-  static registerAdd(req, res) {
-    let { username, password, role, email } = req.body
-    User.create({ username, password, role, email })
-      .then((result) => {
-        res.redirect('/')
-      }).catch((err) => {
-        res.send(err)
-      });
-  }
 
   static loginForm(req, res) {
     let err = req.query.error
@@ -149,12 +155,10 @@ class Controller {
       .then(data => {
         const validPw = bcrypt.compareSync(password, data.password)
         if (username) {
-
           if (validPw) {
             req.session.userId = data.id
             return res.redirect('/')
           }
-
           else return res.redirect(`/login?error=${error}`)
         } else {
           return res.redirect(`/login?error=${error}`)
@@ -175,10 +179,53 @@ class Controller {
         required: false,
       }]
     })
+    .then(data => {
+      data = data[0]
+      res.render('profile', { currentUser, data, timeSince })
+    })
+  }
+
+  static profileForm(req, res) {
+    let currentUser = req.session.userId
+    let error = req.query.error
+    Profile.findAll({
+    where: { UserId : currentUser}
+    })
       .then(data => {
         data = data[0]
-        res.render('profile', { currentUser, data, timeSince })
+        console.log(data);
+        res.render('editProfileForm', {data, currentUser, error})
       })
+      .catch(err => res.send(err))
+
+  }
+
+  static addProfile(req, res) {
+    let currentUser = req.session.userId
+    let {firstName, lastName, dateOfBirth} = req.body
+    Profile.create({firstName, lastName, dateOfBirth, UserId: currentUser})
+    .then(data => {
+      res.redirect(`/profile/${currentUser}`)
+    })
+    .catch(err => {
+      if(err.name === 'SequelizeValidationError') {
+        err = err.errors.map(el => el.message)
+        res.redirect(`/profile/${currentUser}/form?error=${err}`)
+      }
+    })
+        
+  }
+
+  static editProfile(req, res) {
+    let currentUser = req.session.userId
+    let {firstName, lastName, dateOfBirth} = req.body
+    Profile.update({firstName, lastName, dateOfBirth},{
+      where: { UserId : currentUser}
+    })
+      .then(data => {
+        res.redirect(`/profile/${currentUser}`)
+      })
+      .catch(err => res.send(err))
   }
 
   static coba(req, res) {
