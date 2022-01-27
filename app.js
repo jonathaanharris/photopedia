@@ -18,11 +18,15 @@ app.use(session({
   }
 }))
 
+app.get('/logout', Controller.logout)
+
 app.get('/register', Controller.registerForm)
 app.post('/register', Controller.registerAdd)
 
 app.get('/login', Controller.loginForm)
 app.post('/login', Controller.loginAdd)
+
+
 app.get('/', Controller.home)
 app.get('/post/:postId', Controller.postDetail)
 
@@ -39,6 +43,7 @@ app.use((req, res, next) => {
 
 app.get('/post/add', Controller.addPost)
 app.post('/post/add', Controller.postAddPost)
+
 app.get('/coba', Controller.coba)
 
 app.listen(port, () => {
