@@ -24,7 +24,7 @@
         </ul>
         <div class="card-body">
           <a href="/post/<%=el.id%>" class="card-link">see detail</a>
-          <% if (currentUser===el.User.dataValues.id) { %>
+          <% if (currentUser===el.User.dataValues.id||role==='admin') { %>
             <a href="/post/<%=el.id%>/delete" class="card-link">delete</a>
             <% }%>
         </div>

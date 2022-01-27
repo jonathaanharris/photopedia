@@ -16,14 +16,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Comment.init({
-    content: DataTypes.STRING,
+    content: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: { msg: 'Comment cannot be empty' }
+      }
+    },
     UserId: DataTypes.INTEGER,
     PostId: DataTypes.INTEGER
   }, {
-    hooks: {
-      beforeCreate: (instance, options) => {
-      }
-    },
     sequelize,
     modelName: 'Comment',
   });

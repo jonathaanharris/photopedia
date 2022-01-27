@@ -20,26 +20,29 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     username: {
       type: DataTypes.STRING,
-      validate : {
-        notEmpty : {msg: 'username cannot be empty'}
+      unique: true,
+      validate: {
+        notEmpty: { msg: 'username cannot be empty' }
       }
     },
     email: {
       type: DataTypes.STRING,
-      validate : {
-        notEmpty : {msg: 'email cannot be empty'}
+      unique: true,
+      isEmail: true,
+      validate: {
+        notEmpty: { msg: 'email cannot be empty' }
       }
     },
     password: {
       type: DataTypes.STRING,
-      validate : {
-        notEmpty : {msg: 'password cannot be empty'}
+      validate: {
+        notEmpty: { msg: 'password cannot be empty' }
       }
     },
     role: {
       type: DataTypes.STRING,
-      validate : {
-        notEmpty : {msg: 'role cannot be empty'}
+      validate: {
+        notEmpty: { msg: 'role cannot be empty' }
       }
     }
   }, {
