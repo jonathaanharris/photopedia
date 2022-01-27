@@ -22,8 +22,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: (instance, options) => {
-        instance.createdAt = new Date()
-        instance.updatedAt = new Date()
       }
     },
     sequelize,
