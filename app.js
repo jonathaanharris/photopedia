@@ -19,21 +19,16 @@ app.use(session({
 }))
 
 app.get('/logout', Controller.logout)
-
 app.get('/register', Controller.registerForm)
 app.post('/register', Controller.registerAdd)
-
 app.get('/login', Controller.loginForm)
 app.post('/login', Controller.loginAdd)
-
-
 app.get('/', Controller.home)
-
-
 app.get('/post/add', Controller.validateLogin, Controller.addPost)
 app.post('/post/add', Controller.postAddPost)
-
-app.get('/post/:postId', Controller.postDetail)
+app.get('/post/:postId', Controller.validateLogin, Controller.postDetail)
+app.post('/post/:postId/addComment', Controller.validateLogin, Controller.addComment)
+app.get('/comment/:PostId/:id/delete', Controller.deleteComment)
 
 app.get('/coba', Controller.coba)
 

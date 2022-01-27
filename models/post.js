@@ -22,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING
   },
     {
-      hooks: {
-        beforeCreate: (instance, options) => {
-        }
-      },
       sequelize,
       modelName: 'Post',
     });
