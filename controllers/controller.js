@@ -18,8 +18,8 @@ class Controller {
       }).catch((err) => {
         res.send(err)
       });
-
   }
+
   static addPost(req, res) {
     let currentUser = req.session.userId
     res.render('addPost', { currentUser })
@@ -41,6 +41,26 @@ class Controller {
           res.send(arr)
         }
         res.send(err)
+      })
+  }
+
+  static postDetail(req, res) {
+    let { postId } = req.params
+    let currentUser = req.session.userId
+    Post.findAll({
+      where: { id: postId },
+      include: [{
+        model: User,
+        attributes: ["username", "id"],
+        required: false,
+      }, {
+        model: Comment,
+        required: false,
+      }]
+    })
+      .then(data => {
+        data = data[0]
+        res.render('postDetail', { currentUser, data, timeSince })
       })
   }
 

@@ -24,6 +24,7 @@ app.post('/register', Controller.registerAdd)
 app.get('/login', Controller.loginForm)
 app.post('/login', Controller.loginAdd)
 app.get('/', Controller.home)
+app.get('/post/:postId', Controller.postDetail)
 
 app.use((req, res, next) => {
   console.log(req.session);
