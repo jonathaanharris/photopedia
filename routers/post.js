@@ -7,6 +7,8 @@ const Controller = require('../controllers/controller')
 const multer = require('multer')
 const { storage } = require('../cloudinary/index')
 const upload = multer({ storage })
+
+routerPost.get('/', Controller.showPost)
 routerPost.get('/add', Controller.validateLogin, Controller.addPost)
 routerPost.post('/add', upload.single('image'), Controller.postAddPost)
 routerPost.get('/:postId', Controller.validateLogin, Controller.postDetail)

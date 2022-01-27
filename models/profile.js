@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profile.belongsTo(models.User)
     }
-
     age() {
       let check = new Date()
       let age = check - this.dateOfBirth

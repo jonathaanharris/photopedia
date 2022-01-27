@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/other.css"></link>
+</head>
+<body>
+  
+  <%- include('./partial/navbar') %>
+  <div class="container">
+  <h1>Post</h1>
+    <%data.forEach(el=>{%> 
+      <div class="card bg-light mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <img class="rounded mx-auto d-block" src="<%=el.image%> " alt="Card image cap">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%=el.title%>
+                    </h5>
+                    <small class="text-muted">
+                      Like : <%= el.like%>
+                  </small>
+                    <p class="card-text">
+                        <%=el.description%>
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            post by <%=el.User.username%> <%=timeSince(el.createdAt)%>
+                        </small>
+                    </p>
+                    <a class="btn btn-outline-success" href="/post/<%=el.id%>">see detail</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <%})%> 
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+crossorigin="anonymous"></script>
+</html> 
