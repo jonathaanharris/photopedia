@@ -34,24 +34,22 @@
   </nav>
 
   <div class="container">
-    <%data.forEach(el=>{%> 
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="<%=el.image%> " alt="Card image cap">
+        <img class="card-img-top" src="<%=data.image%> " alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title"><%=el.title%> </h5>
-          <p class="card-text"><%=el.description%> </p>
+          <h5 class="card-title"><%=data.title%> </h5>
+          <p class="card-text"><%=data.description%> </p>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">post by <%=el.User.username%> <%=timeSince(el.createdAt)%> </li>
+          <li class="list-group-item">post by <%=data.User.username%> <%=timeSince(data.createdAt)%> </li>
         </ul>
         <div class="card-body">
-          <a href="/post/<%=el.id%>" class="card-link">see detail</a>
-          <% if (currentUser===el.User.dataValues.id) { %>
-            <a href="#" class="card-link">delete</a>
+          <% if (currentUser===data.User.dataValues.id) { %>
+            <a href="#" class="card-link">ddataete</a>
             <% }%>
+          
         </div>
       </div>
-    <%})%> 
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
