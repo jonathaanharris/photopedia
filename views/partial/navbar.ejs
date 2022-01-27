@@ -13,6 +13,12 @@ integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/
         <a class="nav-link active" href="/">Home</a>
         <a class="nav-link" href="/post/add">Add Post</a>
       </div>
+      <form class="d-flex" action="/">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+
       <div class="navbar-nav ms-auto">
         <% if (!currentUser) { %>
         <a class="nav-link" href="/login">Login</a>

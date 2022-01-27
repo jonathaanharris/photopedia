@@ -1,19 +1,27 @@
-
 const { User, Post, Comment, Profile} = require('../models')
+
 const bcrypt = require('bcryptjs');
 const timeSince = require('../helper/time')
+const { Op } = require('sequelize')
 
 class Controller {
 
   static home(req, res) {
-    Post.findAll({
+    let { search } = req.query
+    let obj = {
       include: [{
         model: User
       }]
-    })
+    }
+    if (search) {
+      obj.where = {}
+      obj.where.title = { [Op.iLike]: `%${search}%` }
+    }
+    console.log(obj);
+
+    Post.findAll(obj)
       .then((data) => {
         let currentUser = req.session.userId
-
         res.render('home', { data, timeSince, currentUser })
       }).catch((err) => {
         res.send(err)
@@ -49,26 +57,62 @@ class Controller {
   static postDetail(req, res) {
     let { postId } = req.params
     let currentUser = req.session.userId
+    let data
     Post.findAll({
       where: { id: postId },
       include: [{
         model: User,
         attributes: ["username", "id"],
         required: false,
-      }, {
-        model: Comment,
-        required: false,
-      }]
+      }
+        // , {
+        //   model: Comment,
+        //   required: false,
+        // }
+      ]
     })
-      .then(data => {
-        data = data[0]
-        res.render('postDetail', { currentUser, data, timeSince })
+      .then(temp => {
+        data = temp[0]
+        return Comment.findAll({
+          where: { PostId: postId },
+          include: [{
+            model: User,
+            attributes: ["username", "id"],
+            required: false,
+          }]
+        })
+      }).then(comment => {
+        res.render('postDetail', { currentUser, data, comment, timeSince })
       })
   }
 
   static registerForm(req, res) {
-
     res.render('registerForm')
+  }
+  static addComment(req, res) {
+    let { postId } = req.params
+    let { content } = req.body
+    let UserId = req.session.userId
+    Comment.create({
+      content,
+      PostId: postId,
+      UserId
+    }).then(data => {
+      res.redirect(`/post/${postId}`)
+    }).catch(err => {
+      res.send(err)
+    })
+  }
+
+  static deleteComment(req, res) {
+    let { id, PostId } = req.params
+    Comment.destroy({
+      where: { id }
+    }).then(data => {
+      res.redirect(`/post/${PostId}`)
+    }).catch(err => {
+      res.send(err)
+    })
   }
 
   static registerAdd(req, res) {
@@ -144,7 +188,6 @@ class Controller {
   }
 
   static validateLogin(req, res, next) {
-    console.log(req.session);
     if (!req.session.userId) {
       const error = 'please login dulu'
       res.redirect(`/login?error=${error}`)
