@@ -187,25 +187,6 @@ class Controller {
       .catch(err => res.redirect(`/login?error=${error}`))
   }
 
-  static profile(req, res) {
-    let currentUser = req.session.userId
-    User.findAll({
-      where: { id: currentUser },
-      include: [{
-        model: Profile,
-        required: false
-      }, {
-        model: Post,
-        required: false,
-      }]
-    })
-      .then(data => {
-        data = data[0]
-        res.render('profile', { currentUser, data, timeSince })
-      })
-  }
-
-
   static showProfile(req, res) {
     let currentUser = req.session.userId
     User.findAll({
@@ -264,16 +245,6 @@ class Controller {
       .then(data => {
         res.redirect(`/profile/${currentUser}`)
       })
-      .catch(err => res.send(err))
-  }
-
-  static coba(req, res) {
-    User.findAll({
-      include: [
-        { model: Post, include: [Comment] }
-      ]
-    })
-      .then(data => res.send(data))
       .catch(err => res.send(err))
   }
 
