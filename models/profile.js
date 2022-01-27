@@ -13,6 +13,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profile.belongsTo(models.User)
     }
+
+    age() {
+      let check = new Date()
+      let age = check - this.dateOfBirth
+      age = age / (1000 * 60 * 60 * 24 * 365.25)
+      age = Math.floor(age)
+      return age
+    }
+
+    get convertDate() {
+      return this.dateOfBirth.toISOString().split('T')[0]
+    }
   }
   Profile.init({
     firstName: DataTypes.STRING,

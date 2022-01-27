@@ -26,6 +26,9 @@ app.post('/login', Controller.loginAdd)
 app.get('/', Controller.home)
 
 app.get('/profile/:profileId', Controller.validateLogin, Controller.profile)
+app.get('/profile/:profileId/form', Controller.validateLogin, Controller.profileForm)
+app.post('/profile/:profileId/add', Controller.validateLogin, Controller.addProfile)
+app.post('/profile/:profileId/edit', Controller.validateLogin, Controller.editProfile)
 
 app.get('/post/add', Controller.validateLogin, Controller.addPost)
 app.post('/post/add', Controller.postAddPost)

@@ -163,11 +163,47 @@ class Controller {
         required: false,
       }]
     })
+    .then(data => {
+      data = data[0]
+      res.render('profile', { currentUser, data, timeSince })
+    })
+  }
+
+  static profileForm(req, res) {
+    let currentUser = req.session.userId
+    Profile.findAll({
+    where: { UserId : currentUser}
+    })
       .then(data => {
         data = data[0]
-        // res.send(data)
-        res.render('profile', { currentUser, data, timeSince })
+        console.log(data);
+        res.render('editProfile', {data, currentUser})
       })
+      .catch(err => res.send(err))
+
+  }
+
+  static addProfile(req, res) {
+    let currentUser = req.session.userId
+    let {firstName, lastName, dateOfBirth} = req.body
+    Profile.create({firstName, lastName, dateOfBirth, UserId: currentUser})
+    .then(data => {
+      res.redirect(`/profile/${currentUser}`)
+    })
+    .catch(err => res.send(err))
+        
+  }
+
+  static editProfile(req, res) {
+    let currentUser = req.session.userId
+    let {firstName, lastName, dateOfBirth} = req.body
+    Profile.update({firstName, lastName, dateOfBirth},{
+      where: { UserId : currentUser}
+    })
+      .then(data => {
+        res.redirect(`/profile/${currentUser}`)
+      })
+      .catch(err => res.send(err))
   }
 
   static coba(req, res) {
