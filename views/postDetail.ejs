@@ -21,13 +21,37 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">post by <%=data.User.username%> <%=timeSince(data.createdAt)%> </li>
         </ul>
+        <% if (currentUser===data.User.dataValues.id) { %>
         <div class="card-body">
-          <% if (currentUser===data.User.dataValues.id) { %>
-            <a href="#" class="card-link">ddataete</a>
-            <% }%>
-          
+            <a href="#" class="card-link">delete</a>
         </div>
+        <% }%>
+        <ul class="list-group list-group-flush">
+        <%comment.forEach(el=>{%> 
+        <div class="card-body">
+          <li class="list-group-item"><%=el.content%> <br>
+            <% if(el.User){%> 
+            comment by <%=el.User.dataValues.username%> <%=timeSince(el.createdAt)%>
+            <% if (currentUser===el.User.dataValues.id) { %>
+              <div class="card-body">
+                  <a href="/comment/<%=data.id%>/<%=el.id%>/delete" class="card-link">delete</a>
+              </div>
+            <% }%>
+            <% }%> 
+          </li>
+        </div>
+        <% }) %> 
+      </ul>
       </div>
+      <% if (currentUser) { %>
+        <form action="/post/<%=data.id%>/addComment" method="POST">
+          <div class="mb-3">
+            <label for="comment" class="form-label">add new comment</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" name="content">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <% }%>
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
