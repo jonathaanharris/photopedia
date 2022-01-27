@@ -12,15 +12,17 @@ class Controller {
       }]
     })
       .then((data) => {
-        console.log(req.session.userId)
-        res.render('home', { data, timeSince })
+        let currentUser = req.session.userId
+
+        res.render('home', { data, timeSince, currentUser })
       }).catch((err) => {
         res.send(err)
       });
 
   }
   static addPost(req, res) {
-    res.render('addPost')
+    let currentUser = req.session.userId
+    res.render('addPost', { currentUser })
   }
   static postAddPost(req, res) {
     let { title, description, image } = req.body
