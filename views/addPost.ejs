@@ -12,7 +12,7 @@
 <body>
   <%- include('./partial/navbar') %>
 
-  <div class="container">
+  <div class="container my-5">
     <form action="/post/add" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label for="title">title</label>
@@ -30,7 +30,7 @@
       <% if(error) { %>
         <p style="color: red"><%= error %></p>
         <% } %>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-secondary">Submit</button>
     </form>
 </div>
 </body>

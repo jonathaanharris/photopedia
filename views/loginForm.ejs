@@ -12,8 +12,15 @@ integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/
 
 <body class="text-center text-white">
   <div class="d-flex w-25 h-100 p-3 mx-auto flex-column">
-      <header class="mb-auto">
-      </header>
+    <header class="mb-auto">
+      <div>
+          <h3 class="float-md-left mb-0">Photopedia</h3>
+          <nav class="nav nav-masthead justify-content-center float-md-right">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+              <a class="nav-link" href="/post">Post</a>
+          </nav>
+      </div>
+  </header>
       <main class="px-3">
              <h5 class="card-title">login</h5>
             <form action="/login" method="post">
@@ -26,7 +33,7 @@ integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/
                 <input type="password" name="password" class="form-control" placeholder="password">
               </div>
               <div class="d-grid gap-2 mt-2">
-                <button class="btn btn-primary" type="submit">Login</button>
+                <button class="btn btn-success" type="submit">Login</button>
               </div>
               <% if(err) { %>
               <p style="color: red"><%= err %></p>

@@ -10,12 +10,17 @@
   <title>Document</title>
 </head>
 
-
-
 <body class="d-flex text-center text-white bg-dark">
   <div class="cover-container d-flex w-25 h-100 p-3 mx-auto flex-column">
-      <header class="mb-auto">
-      </header>
+    <header class="mb-auto">
+      <div>
+          <h3 class="float-md-left mb-0">Photopedia</h3>
+          <nav class="nav nav-masthead justify-content-center float-md-right">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+              <a class="nav-link" href="/post">Post</a>
+          </nav>
+      </div>
+  </header>
       <main class="px-3">
              <h5 class="card-title">Register</h5>
              <form action="/register" method="post">
@@ -42,7 +47,7 @@
                 <% if (error) { %>
                   <p style="color: red;"><%= error %></p>
                 <% } %>
-                <button class="btn btn-primary" type="submit">Register</button>
+                <button class="btn btn-success" type="submit">Register</button>
               </div>
             </form>
       </main>
