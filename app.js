@@ -28,21 +28,12 @@ app.post('/login', Controller.loginAdd)
 
 
 app.get('/', Controller.home)
-app.get('/post/:postId', Controller.postDetail)
-
-app.use((req, res, next) => {
-  console.log(req.session);
-  if (!req.session.userId) {
-    const error = 'please login dulu'
-    res.redirect(`/login?error=${error}`)
-  } else {
-    next()
-  }
-})
 
 
-app.get('/post/add', Controller.addPost)
+app.get('/post/add', Controller.validateLogin, Controller.addPost)
 app.post('/post/add', Controller.postAddPost)
+
+app.get('/post/:postId', Controller.postDetail)
 
 app.get('/coba', Controller.coba)
 

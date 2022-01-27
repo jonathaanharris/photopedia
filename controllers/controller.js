@@ -22,8 +22,10 @@ class Controller {
 
   static addPost(req, res) {
     let currentUser = req.session.userId
+    // res.send('test')
     res.render('addPost', { currentUser })
   }
+
   static postAddPost(req, res) {
     let { title, description, image } = req.body
     let UserId = req.session.userId
@@ -120,6 +122,16 @@ class Controller {
       if (err) res.send(err)
       else res.redirect('/')
     })
+  }
+
+  static validateLogin(req, res, next) {
+    console.log(req.session);
+    if (!req.session.userId) {
+      const error = 'please login dulu'
+      res.redirect(`/login?error=${error}`)
+    } else {
+      next()
+    }
   }
 
 }
