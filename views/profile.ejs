@@ -7,6 +7,23 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <%- include('./partial/navbar') %>
+  <div class="card" style="width: 18rem;">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"> Username: <%= data.username %></li>
+      <li class="list-group-item"> Name: <%= data.Profile.firstName %> <%= data.Profile.lastName %></li>
+      <li class="list-group-item">Age : <%= data.Profile.dateOfBirth %></li>
+    </ul>
+  </div>
+  <h2>Post</h2>
+  <% data.Posts.forEach(el => { %>
+    <div class="card" style="width: 18rem;">
+      <img src="<%= el.image %>" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text"><%= el.title %></p>
+        <p class="card-text"><%= el.description %></p>
+      </div>
+    </div>
+  <% }) %>
 </body>
 </html>

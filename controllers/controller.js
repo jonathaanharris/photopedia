@@ -1,5 +1,5 @@
 
-const { User, Post, Comment } = require('../models')
+const { User, Post, Comment, Profile} = require('../models')
 const bcrypt = require('bcryptjs');
 const timeSince = require('../helper/time')
 
@@ -107,23 +107,22 @@ class Controller {
       .catch(err => res.redirect(`/login?error=${error}`))
   }
 
-  static postDetail(req, res) {
-    let { postId } = req.params
+  static profile(req, res) {
     let currentUser = req.session.userId
-    Post.findAll({
-      where: { id: postId },
+    User.findAll({
+      where: { id: currentUser },
       include: [{
-        model: User,
-        attributes: ["username", "id"],
-        required: false,
+        model: Profile,
+        required: false
       }, {
-        model: Comment,
+        model: Post,
         required: false,
       }]
     })
       .then(data => {
         data = data[0]
-        res.render('postDetail', { currentUser, data, timeSince })
+        // res.send(data)
+        res.render('profile', { currentUser, data, timeSince })
       })
   }
 

@@ -18,6 +18,7 @@ integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/
         <a class="nav-link" href="/login">Login</a>
         <a class="nav-link" href="/register">Register</a>
         <% } else{ %>
+        <a class="nav-link" href="/profile/<%= currentUser %>">Profile</a>
         <a class="nav-link" href="/logout">Logout</a>
         <% } %>
       </div>
